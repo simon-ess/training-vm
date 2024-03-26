@@ -1,0 +1,38 @@
+- name: Creates ca_trust cache directory
+  ansible.builtin.file:
+    path: "{{ ca_trust_folder }}"
+    state: directory
+  become: true
+
+- name: Download ROOT CA Certificate
+  ansible.builtin.get_url:
+    url: "{{ root_ca_url }}"
+    dest: "{{ ca_trust_der_path }}"
+  become: true
+  register: get_url_result
+
+- name: Convert DER certificate to PEM
+  command: openssl x509 -inform DER -in '{{ ca_trust_folder }}/corporate_root_ca.der.crt' -out '{{ ca_trust_pem_path }}' -outform PEM
+  become: true
+  when: get_url_result.changed
+
+- name: Copy PEM certificate to ca trust system directory
+  ansible.builtin.copy:
+    src: "{{ ca_trust_pem_path }}"
+    dest: /etc/pki/ca-trust/source/anchors/corporate_root_ca.crt
+  become: true
+  register: copy_result
+
+- name: Update trusted ca
+  command: /usr/bin/update-ca-trust
+  when: copy_result.changed
+  become: true
+
+- name: Allow UnsafeLegacyRenegotiation to support corporate proxy
+  community.general.ini_file:
+    path: /etc/crypto-policies/back-ends/opensslcnf.config
+    option: Options
+    value: UnsafeLegacyRenegotiation
+    state: present
+  become: true
+  

@@ -1,0 +1,12 @@
+---
+- name: Clear rebuild flag
+  ansible.builtin.file:
+    path: "{{ epics_install_path }}/.flag/REBUILD"
+    state: absent
+  become: true
+  changed_when: false
+
+- name: Build EPICS Modules
+  include_tasks: build_module.yml
+  loop: "{{ epics_modules_list }}"
+  

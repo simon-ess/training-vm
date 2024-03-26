@@ -1,0 +1,27 @@
+# User specific configuration
+# Copy this sample file to local.yml then change it
+
+# Activate/deactivate optional roles by uncommenting the associated variable below
+# (default settings are defined in all.yml)
+#epics_base: false
+#catrust: true
+
+# List the EPICS modules that will be built (base is mandatory)
+epics_modules_list:
+  - base
+  - pvxs
+#  - seq
+
+
+# Set proxy, if needed
+#proxy_env:
+#  http_proxy: http://proxy.example.com:8080
+#  https_proxy: http://proxy.example.com:8080
+
+
+# [catrust] CA certificate to work through corporate firewall with deep inspection
+#root_ca_url: "http://pki.iter.org/CertEnroll/io-ws-pkiroot_ITER%20Organization%20Root%20CA.crt"
+
+#ca_trust_folder: "/var/lib/training-vm/ca_trust"
+#ca_trust_der_path: "{{ ca_trust_folder }}/corporate_root_ca.der.crt"
+#ca_trust_pem_path: "{{ ca_trust_folder }}/corporate_root_ca.pem.crt"

@@ -1,0 +1,80 @@
+---
+- name: "{{ epics_modules[item].name }} | Install required dependencies"
+  dnf:
+    name: "{{ epics_modules[item].required_rpms }}"
+    state: present
+  become: true
+
+- name: "{{ epics_modules[item].name }} | Check rebuild flag"
+  stat:
+    path: "{{ epics_install_path }}/.flag/REBUILD }}"
+  register: epics_rebuild_flag
+  changed_when: false
+
+- name: "{{ epics_modules[item].name }} | Clear module build flag"
+  ansible.builtin.file:
+    path: "{{ epics_install_path }}/.flag/{{ item }}-{{ epics_modules[item].version }}"
+    state: absent
+  when: epics_rebuild_flag.stat.exists == true
+
+- name: "{{ epics_modules[item].name }} | Check module build flag"
+  stat:
+    path: "{{ epics_install_path }}/.flag/{{ item }}-{{ epics_modules[item].version }}"
+  register: epics_module_flag
+  changed_when: false
+  when: epics_rebuild_flag.stat.exists == false
+
+- name: "{{ epics_modules[item].name }} | Set rebuild flag"
+  ansible.builtin.file:
+    path: "{{ epics_install_path }}/.flag/REBUILD"
+    state: touch
+  become: true
+  when: epics_module_flag.stat.exists == false
+
+- name: "{{ epics_modules[item].name }} | Download source tar"
+  get_url:
+    url: "{{ epics_modules[item].url }}"
+    dest: "/tmp/{{ item }}-{{ epics_modules[item].version }}.tar.gz"
+  when: epics_module_flag.stat.exists == false
+
+- name: "{{ epics_modules[item].name }} | Extract source tar"
+  unarchive:
+    src: "/tmp/{{ item }}-{{ epics_modules[item].version }}.tar.gz"
+    dest: "{{ epics_install_path }}"
+    remote_src: true
+    extra_opts:
+      - --transform
+      - "s|^[^/]*|{{ item }}-{{ epics_modules[item].version }}|"    # normalize source path
+  become: true
+  when: epics_module_flag.stat.exists == false
+
+- name: "{{ epics_modules[item].name }} | Build from sources (this may take a while)"
+  command: make -C "{{ epics_install_path }}/{{ item }}-{{ epics_modules[item].version }}" all clean
+  register: build_result
+  become: true
+  when: epics_module_flag.stat.exists == false
+
+- name: "{{ epics_modules[item].name }} | Show build result"
+  debug:
+    msg: "Building {{ epics_modules[item].name }} {{ 'was successful' if build_result.rc == 0 else 'failed' }}"
+  when: epics_module_flag.stat.exists == false
+
+- name: "{{ epics_modules[item].name }} | Create RELEASE.local fragment"
+  copy:
+    content: "{{ epics_modules[item].release_var }}={{ epics_install_path }}/{{ item }}-{{ epics_modules[item].version }}\n"
+    dest: "{{ epics_install_path }}/RELEASE.local.d/{{ epics_modules[item].release_sortkey }}-{{ item }}"
+  become: true
+  when: build_result.rc | default(0) == 0 and epics_module_flag.stat.exists == false
+
+- name: "Assemble RELEASE.local"
+  assemble:
+    src: "{{ epics_install_path }}/RELEASE.local.d"
+    dest: "{{ epics_install_path }}/RELEASE.local"
+  become: true
+
+- name: "{{ epics_modules[item].name }} | Create build flag"
+  copy:
+    content: ""
+    dest: "{{ epics_install_path }}/.flag/{{ item }}-{{ epics_modules[item].version }}"
+  become: true
+  when: build_result.rc | default(0) == 0 and epics_module_flag.stat.exists == false
