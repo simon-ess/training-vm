@@ -49,11 +49,19 @@
   become: true
   when: epics_module_flag.stat.exists == false
 
+- name: "{{ epics_modules[item].name }} | Run pre-build hook"
+  include_tasks: "{{ epics_modules[item].pre_hook }}"
+  when: epics_modules[item].pre_hook is defined
+
 - name: "{{ epics_modules[item].name }} | Build from sources (this may take a while)"
   command: make -C "{{ epics_install_path }}/{{ item }}-{{ epics_modules[item].version }}" all clean
   register: build_result
   become: true
   when: epics_module_flag.stat.exists == false
+
+- name: "{{ epics_modules[item].name }} | Run post-build hook"
+  include_tasks: "{{ epics_modules[item].post_hook }}"
+  when: epics_modules[item].post_hook is defined
 
 - name: "{{ epics_modules[item].name }} | Show build result"
   debug:
