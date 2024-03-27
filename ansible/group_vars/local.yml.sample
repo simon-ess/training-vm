@@ -11,7 +11,7 @@ epics_modules_list:
   - base
   - pvxs
 #  - seq
-
+#  - asyn
 
 # Set proxy, if needed
 #proxy_env:

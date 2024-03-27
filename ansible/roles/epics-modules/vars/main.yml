@@ -32,3 +32,16 @@ epics_modules:
     release_sortkey: "10"
     required_rpms:
       - re2c
+
+  asyn:
+    name: "ASYN"
+    version : "4.44.2"
+    url: "https://github.com/epics-modules/asyn/archive/refs/tags/R4-44-2.tar.gz"
+    release_var: "ASYN"
+    release_sortkey: "10"
+    required_rpms:
+      - rpcgen
+      - libtirpc-devel
+    enable_repos:
+      - crb
+    pre_hook: asyn_prep.yml
