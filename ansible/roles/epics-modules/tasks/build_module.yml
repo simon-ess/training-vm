@@ -2,6 +2,7 @@
 - name: "{{ epics_modules[item].name }} | Install required dependencies"
   dnf:
     name: "{{ epics_modules[item].required_rpms }}"
+    enablerepo: "{{ epics_modules[item].enable_repos | default('[]') }}"
     state: present
   become: true
 
