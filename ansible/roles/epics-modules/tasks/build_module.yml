@@ -5,18 +5,25 @@
     enablerepo: "{{ epics_modules[item].enable_repos | default('[]') }}"
     state: present
   become: true
+  when: epics_modules[item].required_rpms is defined
 
-- name: "{{ epics_modules[item].name }} | Check rebuild flag"
+- name: "{{ epics_modules[item].name }} | Check global rebuild flag"
   stat:
     path: "{{ epics_install_path }}/.flag/REBUILD }}"
   register: epics_rebuild_flag
+  changed_when: false
+
+- name: "{{ epics_modules[item].name }} | Check target directory"
+  stat:
+    path: "{{ epics_install_path }}/{{ item }}-{{ epics_modules[item].version }}"
+  register: epics_target_dir
   changed_when: false
 
 - name: "{{ epics_modules[item].name }} | Clear module build flag"
   ansible.builtin.file:
     path: "{{ epics_install_path }}/.flag/{{ item }}-{{ epics_modules[item].version }}"
     state: absent
-  when: epics_rebuild_flag.stat.exists == true
+  when: epics_rebuild_flag.stat.exists == true or epics_target_dir.stat.exists == false
 
 - name: "{{ epics_modules[item].name }} | Check module build flag"
   stat:
@@ -25,7 +32,7 @@
   changed_when: false
   when: epics_rebuild_flag.stat.exists == false
 
-- name: "{{ epics_modules[item].name }} | Set rebuild flag"
+- name: "{{ epics_modules[item].name }} | Set global rebuild flag"
   ansible.builtin.file:
     path: "{{ epics_install_path }}/.flag/REBUILD"
     state: touch
@@ -81,7 +88,7 @@
     dest: "{{ epics_install_path }}/RELEASE.local"
   become: true
 
-- name: "{{ epics_modules[item].name }} | Create build flag"
+- name: "{{ epics_modules[item].name }} | Create module build flag"
   copy:
     content: ""
     dest: "{{ epics_install_path }}/.flag/{{ item }}-{{ epics_modules[item].version }}"
