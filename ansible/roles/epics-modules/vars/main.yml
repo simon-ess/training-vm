@@ -45,3 +45,24 @@ epics_modules:
     enable_repos:
       - crb
     pre_hook: asyn_prep.yml
+
+  adcore:
+    name: "AreaDetector - Core"
+    version: "3.13"
+    url: "https://github.com/areaDetector/ADCore/archive/refs/tags/R3-13.tar.gz"
+    release_var: "ADCORE"
+    release_sortkey: "10"
+    required_rpms:
+      - zlib-devel
+      - libxml2-devel
+      - libtiff-devel
+      - libjpeg-devel
+    pre_hook: adcore_prep.yml
+
+  adsimdetector:
+    name: "AreaDetector - SimDetector"
+    version: "2.10"
+    url: "https://github.com/areaDetector/ADSimDetector/archive/refs/tags/R2-10.tar.gz"
+    release_var: "ADSIMDETECTOR"
+    release_sortkey: "10"
+    pre_hook: adsimdetector_prep.yml
