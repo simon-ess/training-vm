@@ -21,7 +21,8 @@ epics_modules_list:
 #  https_proxy: http://proxy.example.com:8080
 
 
-# [catrust] CA certificate to work through corporate firewall with deep inspection
+# [catrust] CA certificate to work through corporate firewall with deep packet inspection
+# (like e.g. ITER uses)
 #root_ca_url: "http://pki.iter.org/CertEnroll/io-ws-pkiroot_ITER%20Organization%20Root%20CA.crt"
 
 #ca_trust_folder: "/var/lib/training-vm/ca_trust"
