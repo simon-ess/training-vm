@@ -37,7 +37,7 @@
     owner:  "{{ epics_services_account }}"
     group:  "{{ epics_services_account }}"
 
-- name: create run-phoebus
+- name: create phoebus preferences
   become: true
   template:
     src: preferences.ini.j2
@@ -46,7 +46,7 @@
     owner: "{{ phoebus_owner }}"
     group: "{{ phoebus_owner }}"
 
-- name: create run-phoebus
+- name: create phoebus logging properties
   become: true
   template:
     src: logging.properties.j2
@@ -55,7 +55,7 @@
     owner: "{{ phoebus_owner }}"
     group: "{{ phoebus_owner }}"
 
-- name: create run-phoebus
+- name: create run-phoebus wrapper
   become: true
   template:
     src: run-phoebus.sh.j2
