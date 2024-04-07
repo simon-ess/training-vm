@@ -60,6 +60,13 @@ epics_modules:
     release_var: "BUSY"
     release_sortkey: "10"
 
+  sscan:
+    name: "SScan module"
+    version: "2.11.6"
+    url: "https://github.com/epics-modules/sscan/archive/refs/tags/R2-11-6.tar.gz"
+    release_var: "SSCAN"
+    release_sortkey: "10"
+
   adcore:
     name: "AreaDetector - Core"
     version: "3.13"

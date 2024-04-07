@@ -14,6 +14,7 @@ epics_modules_list:
 #  - asyn
 #  - autosave
 #  - busy
+#  - sscan
 #  - adcore
 #  - adsimdetector
 
