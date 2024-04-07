@@ -15,6 +15,7 @@ epics_modules_list:
 #  - autosave
 #  - busy
 #  - sscan
+#  - calc
 #  - adcore
 #  - adsimdetector
 

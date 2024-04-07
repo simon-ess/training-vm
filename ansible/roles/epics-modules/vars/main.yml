@@ -67,6 +67,13 @@ epics_modules:
     release_var: "SSCAN"
     release_sortkey: "10"
 
+  calc:
+    name: "Calc module (misc records)"
+    version: "3.7.5"
+    url: "https://github.com/epics-modules/calc/archive/refs/tags/R3-7-5.tar.gz"
+    release_var: "CALC"
+    release_sortkey: "10"
+
   adcore:
     name: "AreaDetector - Core"
     version: "3.13"
