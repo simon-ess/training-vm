@@ -88,7 +88,7 @@
     content: "{{ epics_modules[item].release_var }}={{ epics_install_path }}/{{ item }}-{{ epics_modules[item].version }}\n"
     dest: "{{ epics_install_path }}/RELEASE.local.d/{{ epics_modules[item].release_sortkey }}-{{ item }}"
   become: true
-  when: build_result.rc | default(0) == 0 and epics_module_flag.stat.exists == false
+  when: epics_module_flag.stat.exists == true or build_result.rc | default(0) == 0
 
 - name: "Assemble RELEASE.local"
   assemble:
