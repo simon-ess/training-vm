@@ -57,6 +57,13 @@
   become: true
   when: epics_module_flag.stat.exists == false
 
+- name: "{{ epics_modules[item].name }} | Remove SUPPORT definition from configure/RELEASE"
+  ansible.builtin.lineinfile:
+    path: "{{ epics_install_path }}/{{ item }}-{{ epics_modules[item].version }}/configure/RELEASE"
+    state: absent
+    regexp: '^SUPPORT='
+  become: true
+
 - name: "{{ epics_modules[item].name }} | Run pre-build hook"
   include_tasks: "{{ epics_modules[item].pre_hook }}"
   when: epics_modules[item].pre_hook is defined
