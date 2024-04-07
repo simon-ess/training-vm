@@ -35,7 +35,7 @@ epics_modules:
 
   asyn:
     name: "ASYN"
-    version : "4.44.2"
+    version: "4.44.2"
     url: "https://github.com/epics-modules/asyn/archive/refs/tags/R4-44-2.tar.gz"
     release_var: "ASYN"
     release_sortkey: "10"
@@ -45,6 +45,13 @@ epics_modules:
     enable_repos:
       - crb
     pre_hook: asyn_prep.yml
+
+  busy:
+    name: "Busy Record"
+    version: "1.7.4"
+    url: "https://github.com/epics-modules/busy/archive/refs/tags/R1-7-4.tar.gz"
+    release_var: "BUSY"
+    release_sortkey: "10"
 
   adcore:
     name: "AreaDetector - Core"
