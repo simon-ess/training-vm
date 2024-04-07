@@ -12,6 +12,7 @@ epics_modules_list:
   - pvxs
 #  - seq
 #  - asyn
+#  - autosave
 #  - busy
 #  - adcore
 #  - adsimdetector

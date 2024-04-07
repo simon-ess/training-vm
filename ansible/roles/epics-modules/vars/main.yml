@@ -46,6 +46,13 @@ epics_modules:
       - crb
     pre_hook: asyn_prep.yml
 
+  autosave:
+    name: "autoSaveRestore"
+    version: "5.11"
+    url: "https://github.com/epics-modules/autosave/archive/refs/tags/R5-11.tar.gz"
+    release_var:  "AUTOSAVE"
+    release_sortkey: "10"
+    
   busy:
     name: "Busy Record"
     version: "1.7.4"
