@@ -5,3 +5,10 @@
     search_string: '-include $(TOP)/RELEASE.local'
     line: '-include $(TOP)/../RELEASE.local'
   become: true
+
+- name: "{{ epics_modules[item].name }} | Fix example IOC configure/RELEASE to include RELEASE.local"
+  ansible.builtin.lineinfile:
+    path: "{{ epics_install_path }}/{{ item }}-{{ epics_modules[item].version }}/iocs/simDetectorIOC/configure/RELEASE"
+    search_string: '-include $(TOP)/RELEASE.local'
+    line: '-include $(TOP)/../RELEASE.local'
+  become: true
