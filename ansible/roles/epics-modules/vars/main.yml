@@ -1,5 +1,5 @@
 epics_modules:
-  
+
   base:
     name: "EPICS Base"
     version: "7.0.8"
@@ -28,7 +28,7 @@ epics_modules:
     name: "SNL Sequencer"
     version: "2.2.9"
     url: "https://github.com/epics-modules/sequencer/archive/refs/tags/R2-2-9.tar.gz"
-    release_var: "SNLSEQ"
+    release_var: "SNCSEQ"
     release_sortkey: "10"
     required_rpms:
       - re2c
@@ -52,7 +52,7 @@ epics_modules:
     url: "https://github.com/epics-modules/autosave/archive/refs/tags/R5-11.tar.gz"
     release_var:  "AUTOSAVE"
     release_sortkey: "10"
-    
+
   busy:
     name: "Busy Record"
     version: "1.7.4"
