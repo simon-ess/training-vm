@@ -89,8 +89,8 @@ epics_modules:
 
   adsimdetector:
     name: "AreaDetector - SimDetector"
-    version: "2.10"
-    url: "https://github.com/areaDetector/ADSimDetector/archive/refs/tags/R2-10.tar.gz"
+    version: "2.11"
+    url: "https://github.com/areaDetector/ADSimDetector/archive/refs/tags/R2-11.tar.gz"
     release_var: "ADSIMDETECTOR"
     release_sortkey: "10"
     pre_hook: adsimdetector_prep.yml
