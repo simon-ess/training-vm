@@ -25,3 +25,11 @@
     state: started
     enabled: yes
   become: yes
+
+- name: Create /etc/containers/nodocker to quiet warning message
+  ansible.builtin.file:
+    path: /etc/containers/nodocker
+    state: touch
+    modification_time: preserve
+    access_time: preserve
+  become: yes
