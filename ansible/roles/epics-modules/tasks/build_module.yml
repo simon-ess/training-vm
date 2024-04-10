@@ -90,10 +90,23 @@
   become: true
   when: epics_module_flag.stat.exists == true or build_result.rc | default(0) == 0
 
-- name: "Assemble RELEASE.local"
+- name: "Update (re-assemble) RELEASE.local"
   assemble:
     src: "{{ epics_install_path }}/RELEASE.local.d"
     dest: "{{ epics_install_path }}/RELEASE.local"
+  become: true
+
+- name: "{{ epics_modules[item].name }} | Create epics-tools.sh fragment"
+  copy:
+    content: "PATH={{ epics_install_path }}/{{ item }}-{{ epics_modules[item].version }}/bin/linux-x86_64:$PATH\n"
+    dest: "{{ epics_install_path }}/epics-tools.sh.d/{{ epics_modules[item].release_sortkey }}-{{ item }}"
+  become: true
+  when: epics_modules[item].add_to_path is defined
+
+- name: "Update (re-assemble) epics-tools.sh"
+  assemble:
+    src: "{{ epics_install_path }}/epics-tools.sh.d"
+    dest: "/etc/profile.d/epics-tools.sh"
   become: true
 
 - name: "{{ epics_modules[item].name }} | Create module build flag"

@@ -15,5 +15,6 @@
   loop:
     - "{{epics_install_path}}"
     - "{{epics_install_path}}/RELEASE.local.d"
+    - "{{epics_install_path}}/epics-tools.sh.d"
     - "{{epics_install_path}}/.flag"
 

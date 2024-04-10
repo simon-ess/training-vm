@@ -6,6 +6,7 @@ epics_modules:
     url: "https://epics-controls.org/download/base/base-7.0.8.tar.gz"
     release_var: "EPICS_BASE"
     release_sortkey: "99"
+    add_to_path: true
     required_rpms:
       - readline-devel
       - ncurses-devel
@@ -16,11 +17,12 @@ epics_modules:
       - perl-Test-Harness
 
   pvxs:
-    name: "PXVS"
+    name: "PVXS"
     version: "1.3.1"
     url: "https://github.com/mdavidsaver/pvxs/archive/refs/tags/1.3.1.tar.gz"
     release_var: "PVXS"
     release_sortkey: "10"
+    add_to_path: true
     required_rpms:
       - libevent-devel
 
@@ -30,6 +32,7 @@ epics_modules:
     url: "https://github.com/epics-modules/sequencer/archive/refs/tags/R2-2-9.tar.gz"
     release_var: "SNCSEQ"
     release_sortkey: "10"
+    add_to_path: true
     required_rpms:
       - re2c
 
