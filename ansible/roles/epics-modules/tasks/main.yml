@@ -4,7 +4,6 @@
     path: "{{ epics_install_path }}/.flag/REBUILD"
     state: absent
   become: true
-  changed_when: false
 
 - name: Build EPICS Modules
   include_tasks: build_module.yml

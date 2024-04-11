@@ -11,13 +11,11 @@
   stat:
     path: "{{ epics_install_path }}/.flag/REBUILD }}"
   register: epics_rebuild_flag
-  changed_when: false
 
 - name: "{{ epics_modules[item].name }} | Check target directory"
   stat:
     path: "{{ epics_install_path }}/{{ item }}-{{ epics_modules[item].version }}"
   register: epics_target_dir
-  changed_when: false
 
 - name: "{{ epics_modules[item].name }} | Clear module build flag"
   ansible.builtin.file:
@@ -30,8 +28,6 @@
   stat:
     path: "{{ epics_install_path }}/.flag/{{ item }}-{{ epics_modules[item].version }}"
   register: epics_module_flag
-  changed_when: false
-  when: epics_rebuild_flag.stat.exists == false
 
 - name: "{{ epics_modules[item].name }} | Set global rebuild flag"
   ansible.builtin.file:
@@ -90,7 +86,7 @@
   become: true
   when: epics_module_flag.stat.exists == true or build_result.rc | default(0) == 0
 
-- name: "Update (re-assemble) RELEASE.local"
+- name: "{{ epics_modules[item].name }} | Update (re-assemble) RELEASE.local"
   assemble:
     src: "{{ epics_install_path }}/RELEASE.local.d"
     dest: "{{ epics_install_path }}/RELEASE.local"
@@ -103,7 +99,7 @@
   become: true
   when: epics_modules[item].add_to_path is defined
 
-- name: "Update (re-assemble) epics-tools.sh"
+- name: "{{ epics_modules[item].name }} | Update (re-assemble) epics-tools.sh"
   assemble:
     src: "{{ epics_install_path }}/epics-tools.sh.d"
     dest: "/etc/profile.d/epics-tools.sh"
