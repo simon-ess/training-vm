@@ -15,6 +15,7 @@ epics_modules:
       - perl-devel
       - perl-Test-Simple
       - perl-Test-Harness
+    pre_hook: base_prep.yml
 
   pvxs:
     name: "PVXS"
