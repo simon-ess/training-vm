@@ -9,7 +9,7 @@
 
 - name: "{{ epics_modules[item].name }} | Check global rebuild flag"
   stat:
-    path: "{{ epics_install_path }}/.flag/REBUILD }}"
+    path: "{{ epics_install_path }}/.flag/REBUILD"
   register: epics_rebuild_flag
 
 - name: "{{ epics_modules[item].name }} | Check target directory"
@@ -33,6 +33,8 @@
   ansible.builtin.file:
     path: "{{ epics_install_path }}/.flag/REBUILD"
     state: touch
+    modification_time: preserve
+    access_time: preserve
   become: true
   when: epics_module_flag.stat.exists == false
 
