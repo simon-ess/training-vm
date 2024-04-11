@@ -89,6 +89,7 @@ epics_modules:
       - libtiff-devel
       - libtiff-tools
       - libjpeg-devel
+      - hdf5-devel
     enable_repos:
       - crb
     pre_hook: adcore_prep.yml
