@@ -12,6 +12,7 @@
     version: "{{ bluesky_container_branch }}"
     clone: yes
     update: yes
+    force: true       # required for update with WORKAROUND (see below)
   become: no
 
 - name: Create sub-directory (data, user) inside bluesky directory
@@ -25,6 +26,13 @@
   ansible.builtin.file:
     path: "{{ bluesky_deployment_dir_path }}/history.sqlite"
     state: touch
+  become: no
+
+- name: "WORKAROUND: use templated run_bluesky.sh"
+  ansible.builtin.template:
+    src: run_bluesky.sh.j2
+    dest: "{{ bluesky_deployment_dir_path }}/run_bluesky.sh"
+    mode: '755'
   become: no
 
 - name: Ensure the script is executable
@@ -103,7 +111,7 @@
   become: yes
 
 - name: tcp ports facts
-  community.general.listen_ports_facts: 
+  community.general.listen_ports_facts:
 
 - name: Add ports to firewall
   firewalld:
@@ -120,7 +128,7 @@
     var: ports_added_to_firewalld
 
 - name: tcp ports facts
-  community.general.listen_ports_facts: 
+  community.general.listen_ports_facts:
 
 - name: Add ports to firewall
   firewalld:
