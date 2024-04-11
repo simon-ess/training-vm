@@ -13,6 +13,7 @@
 epics_modules_list:
   - base
   - pvxs
+#  - pvapy
 #  - seq
 #  - asyn
 #  - autosave
