@@ -36,7 +36,7 @@ else
     slug=""
 fi
 
-( cd ${collection_dir}; git checkout --recurse-submodules ${slug}; git pull )
+( cd ${collection_dir}; git checkout --recurse-submodules ${slug}; git pull --recurse-submodules )
 
 ansible-galaxy install -r ${bootstrap_dir}/requirements.yml || true
 ansible-playbook -i ${bootstrap_dir}/ansible/hosts ${bootstrap_dir}/ansible/playbook.yml "$@"
