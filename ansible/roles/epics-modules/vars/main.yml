@@ -101,3 +101,11 @@ epics_modules:
     release_var: "ADSIMDETECTOR"
     release_sortkey: "10"
     pre_hook: adsimdetector_prep.yml
+
+  adpvadriver:
+    name: "AreaDetector - pvaDriver"
+    version: "1.5"
+    url: "https://github.com/areaDetector/pvaDriver/archive/refs/tags/R1-5.tar.gz"
+    release_var: "ADPVADRIVER"
+    release_sortkey: "10"
+    pre_hook: adpvadriver_prep.yml

@@ -21,6 +21,7 @@ epics_modules_list:
 #  - calc
 #  - adcore
 #  - adsimdetector
+#  - adpvadriver
 
 # Set proxies, if needed
 #proxy_env:
