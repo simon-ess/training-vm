@@ -48,6 +48,8 @@
   unarchive:
     src: "/tmp/{{ item }}-{{ epics_modules[item].version }}.tar.gz"
     dest: "{{ epics_install_path }}"
+    owner: root
+    group: root
     remote_src: true
     extra_opts:
       - --transform
