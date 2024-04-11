@@ -1,31 +1,42 @@
 #!/bin/sh
 # update.sh
 
-# Simple caller script for ansible-playbook
+# Update script that tries to pull the training VM to the appropriate latest versions
+
 # Improved robustness:
-# - tries the first command line arg, then the script directory, then "." as location
+# - tries the first command line arg or "." as location for the collection
 # - remaining command line args are passed through to ansible-playbook call
 
-bootstrap_dir=${1%/}
-script_dir=$(dirname $0)
+# - runs 'git pull --recurse-submodules' on the collection
+# - runs ansible
+
+collection_dir=${1%/}
 
 if [ "$(whoami)" == "root" ]; then
   echo "This script must be run by a regular user (with sudo privileges)."
   exit 1
 fi
 
-if [ -d "${bootstrap_dir}" ]; then
+if [ -d "${collection_dir}" ]; then
     shift
-elif [ -d "${script_dir}" ]; then
-    bootstrap_dir=${script_dir%/}
-else
-    bootstrap_dir="."
+elif [ -d "./vm-setup/ansible" ]; then
+    collection_dir="."
 fi
 
+bootstrap_dir=${collection_dir}/vm-setup
+
 if [ ! -d ${bootstrap_dir}/ansible ]; then
-    echo "update.sh [bootstrap_dir] [ansible-playbook args...]"
+    echo "update.sh [collection_dir] [ansible-playbook args...]"
     exit 1
 fi
+
+if [ -e "/etc/epics-training" ]; then
+    slug=$(</etc/epics-training)
+else
+    slug=""
+fi
+
+( cd ${collection_dir}; git checkout --recurse-submodules ${slug})
 
 ansible-galaxy install -r ${bootstrap_dir}/requirements.yml || true
 ansible-playbook -i ${bootstrap_dir}/ansible/hosts ${bootstrap_dir}/ansible/playbook.yml "$@"
