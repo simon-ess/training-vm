@@ -87,7 +87,10 @@ epics_modules:
       - zlib-devel
       - libxml2-devel
       - libtiff-devel
+      - libtiff-tools
       - libjpeg-devel
+    enable_repos:
+      - crb
     pre_hook: adcore_prep.yml
 
   adsimdetector:
