@@ -65,7 +65,7 @@ if [ ! -e "${BOOTSTRAP_DIR}" ]; then
 fi
 
 # Point out missing local.yml configuration
-if [ ! -e "${BOOTSTRAP_DIR}/ansible/group_vars/local.yml" ]; then
+if [ ! -e "${COLLECTION_DIR}/vm-setup/ansible/group_vars/local.yml" ]; then
     ln -s "../../../local.yml" "${COLLECTION_DIR}/vm-setup/ansible/group_vars/local.yml"
 else
     echo "Verify your existing local configuration in ${BOOTSTRAP_DIR}/ansible/group_vars/local.yml"
