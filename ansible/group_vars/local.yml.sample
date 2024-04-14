@@ -13,6 +13,7 @@
 epics_modules_list:
   - base
   - pvxs
+#  - p4p
 #  - pvapy
 #  - seq
 #  - asyn

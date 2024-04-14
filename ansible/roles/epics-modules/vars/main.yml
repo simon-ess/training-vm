@@ -27,13 +27,26 @@ epics_modules:
     required_rpms:
       - libevent-devel
 
+  p4p:
+    name: "p4p"
+    version: "4.1.12"
+    url: "https://github.com/mdavidsaver/p4p/archive/refs/tags/4.1.12.tar.gz"
+    release_var: "P4P"
+    release_sortkey: "10"
+    required_rpms:
+      - python3-devel
+      - python3-numpy
+      - python3-nose2
+      - python3-Cython
+    enable_repos:
+      - crb
+
   pvapy:
     name: "pvaPy"
     version: "5.3.1"
     url: "https://github.com/epics-base/pvaPy/archive/refs/tags/5.3.1.tar.gz"
     release_var: "PVAPY"
     release_sortkey: "10"
-    add_to_path: true
     required_rpms:
       - python3-devel
       - boost-python3-devel
