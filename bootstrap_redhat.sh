@@ -66,8 +66,7 @@ fi
 
 # Point out missing local.yml configuration
 if [ ! -e "${BOOTSTRAP_DIR}/ansible/group_vars/local.yml" ]; then
-    echo "In ${BOOTSTRAP_DIR}/ansible/group_vars create a local configuration file local.yml"
-    echo "by making a copy of local.yml.sample and editing to your needs."
+    ln -s "../../../local.yml" "${COLLECTION_DIR}/vm-setup/ansible/group_vars/local.yml"
 else
     echo "Verify your existing local configuration in ${BOOTSTRAP_DIR}/ansible/group_vars/local.yml"
 fi
