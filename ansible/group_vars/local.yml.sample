@@ -6,17 +6,19 @@
 #epics_modules: false
 #catrust: true
 #epics_tools: false
-#docker: false
-#bluesky: false
+#docker: true
+#bluesky: true
 
 # List the EPICS modules that will be built in this order (base is mandatory)
 epics_modules_list:
   - base
   - pvxs
+# Two alternative Python wrappers
 #  - p4p
 #  - pvapy
 #  - seq
 #  - asyn
+# AreaDetector dependencies
 #  - autosave
 #  - busy
 #  - sscan
