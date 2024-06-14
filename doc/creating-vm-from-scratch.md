@@ -7,7 +7,7 @@ but it should work similarly on other versions and host systems.
 
 ## Create the VM
 
-Create a new virtual machine, using the Rocky Linux 9.3 iso image.
+Create a new virtual machine, using an Rocky Linux 9.4 iso image.
 (Both a local install from the 10GB DVD iso
 or a network install from the 900MB boot iso work.)
 Here are the settings we used.
@@ -20,11 +20,11 @@ You can use the "Server with GUI" or "Workstation" profiles,
 no additional software modules are needed.
 
 Create a user (we used epics-dev as the "EPICS Developer")
-select "Make this user administrator" (which enables sudo).
+and select "Make this user administrator" (which enables sudo).
 We did not set a password, which is fine for a personal VM
 that you run on your own computer/laptop.
 
-Consider saving the state in a snapshot, *"9.3 fresh"*.
+Consider saving the state in a snapshot, *"9.4 fresh"*.
 
 ## Update the system
 
@@ -57,7 +57,7 @@ Install the prerequisites for building the VBox Guest Additions
 
 Reboot.
 
-It is useful to make another snapshot at this point, *"9.3 updated"*.
+It is useful to make another snapshot at this point, *"9.4 updated"*.
 
 ## Install the VBox Guest Additions
 
@@ -65,7 +65,7 @@ It is useful to make another snapshot at this point, *"9.3 updated"*.
 
 Reboot.
 
-Create a snapshot *"9.3 with Guest Additions <VBox version>"*.
+Create a snapshot *"9.4 with Guest Additions <VBox version>"*.
 
 ## Get and run the bootstrap script
 
@@ -79,22 +79,23 @@ E.g. (in one audacious step)
 $ eval "$(curl -L https://raw.githubusercontent.com/epics-training/training-vm/main/bootstrap_redhat.sh)"
 ```
 
-This will make sure the required software is installed (git, ansible)
-and clone this repository with the ansible configuration
-into a directory called `bootstrap`.
+This will first make sure the required software is installed (git, ansible).
+Then it will clone this repository with the ansible configuration
+into a directory called `training`.
 
 ## Create your local configuration
 
-Inside the `bootstrap/ansible/group_vars` directory,
-make a copy of the file `local.yml.sample`, naming it `local.yml`.
+Change into the `training` directory.
 
-Edit `bootstrap/ansible/group_vars/local.yml`
-to configure your training VM.
+The file `local.yml` has been created as a copy
+of the sample file `vm-setup/ansible/group_vars/local.yml.sample`.
+
+Edit `local.yml` to configure your training VM.
 
 ## Run ansible to install the system
 
 ```
-$ bootstrap/update.sh
+$ vm-setup/update.sh
 ```
 will install or update the training VM according to your configuration.
 
