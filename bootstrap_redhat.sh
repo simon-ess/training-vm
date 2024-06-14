@@ -50,7 +50,7 @@ fi
 # Clone the training-collection
 if [ ! -e "${COLLECTION_DIR}" ]; then
     echo "Cloning training-collection ($slug) into ./${COLLECTION_DIR}..."
-    git clone --recursive ${COLLECTION_REPO} ${COLLECTION_DIR}
+    git clone --recurse-submodules ${COLLECTION_REPO} ${COLLECTION_DIR}
     if [ "$slug" ]; then
         ( cd ${COLLECTION_DIR}; git checkout --recurse-submodules ${slug} )
     fi
