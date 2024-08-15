@@ -43,6 +43,12 @@ Enable EPEL and update the system.
 
 Reboot (important!).
 
+Note: If you're working with an older snapshot
+and this command produces unexpected weird errors
+("SSL verification error: certificate is not yet valid" or similar),
+make sure your system time is updated.
+(E.g., flip the "auto/manual" switch in the system setting back and forth.)
+
 ## Allow passwordless sudo
 
 Become root.
