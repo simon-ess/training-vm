@@ -74,6 +74,10 @@ It is useful to make another snapshot at this point, *"9.4 updated"*.
 
 Reboot.
 
+Note: If you're experiencing unexpected graphics issues
+(e.g., diagonal patterns that change with mouse actions),
+try enabling or disabling 3D acceleration in the VM settings.
+
 Create a snapshot *"9.4 with Guest Additions <VBox version>"*.
 
 ## Get and run the bootstrap script
