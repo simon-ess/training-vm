@@ -48,6 +48,7 @@
   unarchive:
     src: "/tmp/{{ item }}-{{ epics_modules[item].version }}.tar.gz"
     dest: "{{ epics_install_path }}"
+    exclude: "{{ epics_modules[item].exclude | default('[]') }}"
     owner: root
     group: root
     remote_src: true

@@ -18,6 +18,7 @@ epics_modules_list:
 #  - pvapy
 #  - seq
 #  - asyn
+#  - opcua
 # AreaDetector dependencies
 #  - autosave
 #  - busy

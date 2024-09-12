@@ -143,3 +143,15 @@ epics_modules:
     release_var: "PVADRIVER"
     release_sortkey: "10"
     pre_hook: adpvadriver_prep.yml
+
+  opcua:
+    name: "OPC UA Support"
+    version: "0.10.0"
+    url: "https://github.com/epics-modules/opcua/releases/download/v0.10.0/BDIST_opcua-0.10.0_Base-7.0.8.1_rhel9.tar.gz"
+    exclude:
+      - opcuaExampleIoc
+      - HOW_TO.md
+    release_var: "OPCUA"
+    release_sortkey: "10"
+    post_hook: opcua_post.yml
+
