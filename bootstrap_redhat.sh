@@ -49,11 +49,12 @@ fi
 
 # Clone the training-collection
 if [ ! -e "${COLLECTION_DIR}" ]; then
-    echo "Cloning training-collection ($slug) into ./${COLLECTION_DIR}..."
-    git clone --recurse-submodules ${COLLECTION_REPO} ${COLLECTION_DIR}
+    branch=""
     if [ "$slug" ]; then
-        ( cd ${COLLECTION_DIR}; git checkout --recurse-submodules ${slug} )
+        branch="-b $slug"
     fi
+    echo "Cloning training-collection ($slug) into ./${COLLECTION_DIR}..."
+    git clone --recurse-submodules $branch ${COLLECTION_REPO} ${COLLECTION_DIR}
 else
     echo "Update the existing training-vm configuration by running 'git pull' in ./${COLLECTION_DIR}."
     echo "Switch the training setup with 'git checkout \$(</etc/epics-training)' in ./${COLLECTION_DIR}."
