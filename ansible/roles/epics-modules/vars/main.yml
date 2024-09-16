@@ -26,6 +26,7 @@ epics_modules:
     add_to_path: true
     required_rpms:
       - libevent-devel
+      - libxml2-devel
 
   p4p:
     name: "p4p"
