@@ -3,10 +3,11 @@
 
 # Activate/deactivate optional roles by uncommenting the associated variable below
 # (default settings are defined in all.yml)
-#epics_modules: false
+#initial_setup: true # only used for Vagrant build
+#docker: false # for rootful this needs to happen before first reboot
+epics_modules_build: true
 #catrust: true
-#epics_tools: false
-#docker: true
+#epics_tools: true
 #bluesky: true
 
 # List the EPICS modules that will be built in this order (base is mandatory)
