@@ -57,9 +57,26 @@ VAGRANT_VM_CPUS=16 vagrant up rocky
 vagrant vbguest rocky --auto-reboot
 ```
 
-The last vbguest step may wait indefinitely for the VM to reboot.
-If it does, manually reboot the VM from the VirtualBox GUI
-using 'ACPI shutdown'.
+In case of kernel updates and a mismatch of VirtualBox versions
+between your host and the Vagrant base box image,
+the `vagrant vbguest` step fails with not being able
+to download the correct version of the kernel development package.
+The error messages contain e.g.: 
+
+```
+Package kernel-devel-5.14.0-427.42.1.el9_4.x86_64 is already installed.
+No match for argument: kernel-devel-5.14.0-427.13.1.el9_4.x86_64
+```
+
+In that case, reboot the VM from the VirtualBox GUI using 'ACPI shutdown'
+and re-run the `vagrant up` and `vagrant vbguest` steps.
+
+Sometimes the `vagrant vbguest` step runs sucessfully,
+installs a new version of the Guest Additions,
+but does not manage to reboot the VM after that update.
+
+In that case, reboot the VM from the VirtualBox GUI using 'ACPI shutdown'
+and re-run the `vagrant up` step.
 
 You can login with username `epics-dev`, no password.
 
