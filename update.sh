@@ -42,5 +42,5 @@ if [ ! -e "${collection_dir}/vm-setup/ansible/group_vars/local.yml" ]; then
     ln -s "../../../local.yml" "${collection_dir}/vm-setup/ansible/group_vars/local.yml"
 fi
 
-ansible-galaxy install -r ${bootstrap_dir}/requirements.yml || true
+ansible-galaxy install -r ${bootstrap_dir}/ansible/requirements.yml || true
 ansible-playbook -i ${bootstrap_dir}/ansible/hosts ${bootstrap_dir}/ansible/playbook.yml "$@"
