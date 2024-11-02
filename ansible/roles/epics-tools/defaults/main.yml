@@ -4,7 +4,7 @@
 epics_services_account: root
 
 java_home: "/opt/epics-tools/lib/jvm/jdk-17"
-mvn_home: "/opt/epics-tools/lib/apache-maven-3.6.0"
+mvn_home: "/opt/epics-tools/lib/apache-maven"
 
 phoebus_version: 8728dbb
 
