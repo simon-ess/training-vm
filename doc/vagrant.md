@@ -1,18 +1,18 @@
 # Vagrant VM Creation
 
-vagrant: making VMs as much fun as containers!
+Vagrant: making VMs as much fun as containers!
 
 ## Introduction
 
-Here are instructions to use vagrant to build the Virtualbox VM as an alternative to [creating-vm-from-scratch.md](creating-vm-from-scratch.md).
+Here are instructions to use Vagrant to build the VirtualBox VM as an alternative to [creating-vm-from-scratch.md](creating-vm-from-scratch.md).
 
 Advantages:
 - The VM is created in a reproducible and fully automated way.
-- Its faster because it starts with a pre-built base 'box'.
+- It's faster because it starts with a pre-built base 'box'.
 
-## Pre-requisites
+## Pre-Requisites
 
-Setup the required tools on your host machine:
+Set up the required tools on your host machine:
 1. Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
    - WARNING: VirtualBox 7.1 is not compatible with Vagrant 2.4.1 or 2.4.2, use VirtualBox 7.0 until Vagrant 2.4.3 is released.
 1. Install [Vagrant](https://www.vagrantup.com/downloads.html)
@@ -24,10 +24,10 @@ Supported distributions are: debian, fedora, rocky, ubuntu. Make sure you list t
 
 Before creating a VM set the following environment variables as required:
 
-- `VAGRANT_VM_CPUS`: to the number of CPUS to allocate to the VM.
-- `VAGRANT_ANSIBLE_ARGS`: additional arguments to pass to the anisble-playbook command.
+- `VAGRANT_VM_CPUS`: number of CPUs to allocate to the VM.
+- `VAGRANT_ANSIBLE_ARGS`: additional arguments to pass to the ansible-playbook command.
 
-Default cpus count is `VAGRANT_VM_CPUS=4`. For maximum performance set CPUS to the number of physical CPUS on a Windows host, or the number of logical CPUS on a Linux Host (according to giles tests).
+Default CPU count is `VAGRANT_VM_CPUS=4`. For maximum performance set CPUS to the number of physical CPUs on a Windows host, or the number of logical CPUs on a Linux Host (according to giles' tests).
 
 The following example is to bring up the rocky distro. Change the distro name to the one you want to use or supply a list of distros separated by spaces.
 ```bash
@@ -36,7 +36,7 @@ git clone git@github.com:epics-training/training-vm.git
 # install the vagrant-vbguest plugin
 vagrant plugin install vagrant-vbguest
 
-cd training-vm/vagrant rocky
+cd training-vm/vagrant
 # start the VM and run the ansible playbook (adjust CPUS to your host)
 VAGRANT_VM_CPUS=16 vagrant up rocky
 # install the latest VirtualBox Guest Additions into the VM
@@ -45,11 +45,11 @@ vagrant vbguest rocky --auto-reboot
 
 The last vbguest step may wait indefinitely for the VM to reboot. If it does, you can manually reboot the VM from the VirtualBox GUI using ACPI shutdown.
 
-You can login with username epics-dev, no password.
+You can login with username `epics-dev`, no password.
 
-Before publishing an OVA file, adjust CPUs to a more friendly value for the end user's host machines.
+Before publishing an OVA file, adjust CPUs to a more friendly value for the end user's host machines and shrink the disk image (see below).
 
-## Add more features
+## Adding More Features
 
 The initial installation is a minimal VM. You can add more features by running the ansible playbook again after creating a custom local.yml.
 
@@ -57,7 +57,7 @@ The initial installation is a minimal VM. You can add more features by running t
 - edit `ansible/group_vars/local.yml` to enable the features you want
 - run `vagrant provision rocky`
 
-Alternatively you can do this from inside the VM as follows:
+Alternatively, you can do this from inside the VM as follows:
 
 ```bash
 # from inside the VM
@@ -94,7 +94,7 @@ SSH into the rocky VM:
 vagrant ssh rocky
 ```
 
-## Shrinking the VM into a small appliance file
+## Shrinking the VM into a Small Appliance File
 
 TODO
 This will describe how to zero unused blocks and make a smaller appliance file.
