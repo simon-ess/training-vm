@@ -9,7 +9,7 @@
     name: "fedora"
   },
   {
-    box: "rockylinux/9",
+    box: "bento/rockylinux-9",
     installer: "dnf",
     name: "rocky"
   },
