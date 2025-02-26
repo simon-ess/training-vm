@@ -14,6 +14,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: run intial setup and ansible inside a container
+      - name: run initial setup and ansible inside a container
         run: |
           ./.github/test_docker.sh ${{ matrix.distro }}
