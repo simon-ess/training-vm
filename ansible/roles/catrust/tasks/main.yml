@@ -16,15 +16,15 @@
   become: true
   when: get_url_result.changed
 
-- name: Copy PEM certificate to ca trust system directory
+- name: Copy PEM certificate to system ca trust directory
   ansible.builtin.copy:
     src: "{{ ca_trust_pem_path }}"
-    dest: /etc/pki/ca-trust/source/anchors/corporate_root_ca.crt
+    dest: "{{ distro.system_ca_trust_dir }}/corporate_root_ca.crt"
   become: true
   register: copy_result
 
-- name: Update trusted ca
-  command: /usr/bin/update-ca-trust
+- name: Update trusted ca certificates
+  command: "{{ distro.system_ca_trust_update }}"
   when: copy_result.changed
   become: true
 
