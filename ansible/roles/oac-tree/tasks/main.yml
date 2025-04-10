@@ -49,7 +49,7 @@
     line: "{{ item }}"
   become: true
   loop:
-    - "/usr/local/lib64"
+    - "{{ oactree_install_path }}/lib64"
     - "{{ oactree_install_path }}/lib/oac-tree/plugins"
     - "/opt/epics/base-7.0.9/lib/linux-{{ ansible_facts['architecture'] }}"
     - "/opt/epics/pvxs-1.3.1/lib/linux-{{ ansible_facts['architecture'] }}"
