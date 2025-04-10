@@ -42,7 +42,7 @@
     state: absent
   become: true
 
-- name: "Add plugin location to linker configuration"
+- name: "Add library/plugin/dependency locations to linker configuration"
   ansible.builtin.lineinfile:
     path: /etc/ld.so.conf.d/oac-tree.conf
     create: true

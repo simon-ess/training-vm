@@ -9,14 +9,14 @@
 - name: "{{ oactree_modules[item].name }} | Check build directory"
   stat:
     path: "{{ oactree_install_path }}/src/{{ item }}"
-  register: oactree_target_dir
+  register: oactree_build_dir
 
 - name: "{{ oactree_modules[item].name }} | Clear module build flag"
   ansible.builtin.file:
     path: "{{ oactree_install_path }}/.flag/{{ item }}"
     state: absent
   become: true
-  when: oactree_rebuild_flag.stat.exists == true or oactree_target_dir.stat.exists == false
+  when: oactree_rebuild_flag.stat.exists == true or oactree_build_dir.stat.exists == false
 
 - name: "{{ oactree_modules[item].name }} | Check module build flag"
   stat:
