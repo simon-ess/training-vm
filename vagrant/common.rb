@@ -1,4 +1,7 @@
 # environment parameters
+
+# !! Make sure the CI settings (in .../.github/test_docker.sh) are equivalent
+
 @cpus = ENV['VAGRANT_VM_CPUS'] || 4
 @ansible_args = ENV['VAGRANT_ANSIBLE_ARGS'] || ""
 
