@@ -79,8 +79,7 @@ and re-run the `vagrant up` step.
 You can login with username `epics-dev`, no password.
 
 Before publishing an OVA file,
-adjust CPUs to a more friendly value for the end user's host machine
-and shrink the disk image (see below).
+adjust CPUs to a more friendly value for the end user's host machine.
 
 ## Add the Training Specific Content: Bootstrap and Update
 
