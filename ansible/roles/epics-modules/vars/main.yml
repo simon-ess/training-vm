@@ -134,6 +134,7 @@ epics_modules:
     url: "https://github.com/epics-modules/sscan/archive/refs/tags/R2-11-6.tar.gz"
     release_var: "SSCAN"
     release_sortkey: "10"
+    pre_hook: sscan_prep.yml
 
   calc:
     name: "Calc module (misc records)"
