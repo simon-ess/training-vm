@@ -74,7 +74,7 @@
 
 - name: "{{ epics_modules[item].name }} | Run pre-build hook"
   include_tasks: "{{ epics_modules[item].pre_hook }}"
-  when: epics_modules[item].pre_hook is defined
+  when: epics_modules[item].pre_hook is defined and epics_module_flag.stat.exists == false
 
 - name: "{{ epics_modules[item].name }} | Build from sources (this may take a while)"
   command: make {{ epics_modules[item].args | default('') }} -C {{ epics_install_path }}/{{ item }}-{{ epics_modules[item].version }} all
