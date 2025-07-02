@@ -12,45 +12,70 @@
   include_tasks: grow_disk.yml
   when: not in_container
 
-- name: APT Upgrade all packages
-  ansible.builtin.apt:
-    name: "*"
-    state: latest
-    update_cache: true
-  become: true
+- name: Replace mirrorlist with specific mirrors for Rocky
+  when: ansible_distribution == 'Rocky'
+  block:
+    - name: Comment out mirrorlist for Rocky
+      ansible.builtin.replace:
+        path: "/etc/yum.repos.d/{{ item }}"
+        regexp: "^(mirrorlist=.*)$"
+        replace: "#\\1"
+      with_items:
+        - rocky.repo
+        - rocky-extras.repo
+        - rocky-devel.repo
+        - rocky-addons.repo
+
+    - name: Uncomment baseurl for Rocky
+      ansible.builtin.replace:
+        path: "/etc/yum.repos.d/{{ item }}"
+        regexp: "^#(baseurl=.*)$"
+        replace: "\\1"
+      with_items:
+        - rocky.repo
+        - rocky-extras.repo
+        - rocky-devel.repo
+        - rocky-addons.repo
+
+- name: APT Upgrade all packages; install Dev Tools and Gnome
   when: is_debian
-
-- name: RPM Upgrade all packages
-  ansible.builtin.dnf:
-    name: "*"
-    state: latest
   become: true
+  block:
+    - name: Upgrade all packages
+      ansible.builtin.apt:
+        name: "*"
+        state: latest
+        update_cache: true
+
+    - name: Install Dev Tools and Gnome
+      ansible.builtin.apt:
+        name:
+          - build-essential
+          - git
+          - vim
+          - curl
+          - sudo
+          - openssl
+          - "{{ distro.gnome_group }}"
+
+- name: RPM Upgrade all packages; install Dev Tools and Gnome
   when: is_redhat
-
-- name: APT Install Dev Tools and Gnome
-  ansible.builtin.apt:
-    name:
-      - build-essential
-      - git
-      - vim
-      - curl
-      - sudo
-      - openssl
-      - "{{ distro.gnome_group }}"
   become: true
-  when: is_debian
+  block:
+    - name: Upgrade all packages
+      ansible.builtin.dnf:
+        name: "*"
+        state: latest
 
-- name: RPM Install Dev Tools and Gnome
-  dnf:
-    name:
-      - "@Development Tools"
-      - vim
-      - sudo
-      - openssl
-      - "@{{ distro.gnome_group }}"
-    allowerasing: true # fix version conflicts for curl and coreutils on Rocky
-  become: true
-  when: is_redhat
+    - name: Install Dev Tools and Gnome
+      ansible.builtin.dnf:
+        name:
+          - "@Development Tools"
+          - vim
+          - sudo
+          - openssl
+          - "@{{ distro.gnome_group }}"
+        allowerasing: true # fix version conflicts for curl and coreutils on Rocky
 
 - name: Change default target to graphical.target
   file:
@@ -68,7 +93,7 @@
   become: true
   when: not in_container
 
-- name: create user
+- name: Create development user
   ansible.builtin.user:
     name: "{{ dev_user }}"
     shell: /bin/bash
@@ -78,7 +103,7 @@
   become: true
 
 - name: Make users passwordless for sudo in group wheel
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/sudoers
     regexp: "^%{{ dev_user }}"
     line: "%{{ dev_user }} ALL=(ALL) NOPASSWD: ALL"
@@ -90,7 +115,7 @@
     src: user.conf_nogreeter
     dest: /var/lib/AccountsService/users/vagrant
 
-- name: ensure that python refers to python3 (fixes issue with Rocky container)
+- name: Ensure that python refers to python3 (fixes issue with Rocky container)
   ansible.builtin.file:
     src: /usr/bin/python3
     dest: /usr/bin/python
