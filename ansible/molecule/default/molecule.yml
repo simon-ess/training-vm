@@ -1,0 +1,28 @@
+---
+dependency:
+  name: galaxy
+lint: |
+  set -e
+  yamllint .
+  ansible-lint
+  flake8
+provisioner:
+  name: ansible
+  config_options:
+    defaults:
+      gather_timeout: 20
+  inventory:
+    group_vars:
+      molecule_group:
+        micromamba_channels:
+          - mini-conda-forge
+driver:
+  name: vagrant
+  provider:
+    name: virtualbox
+
+platforms:
+  - name: epics-training-rocky-default
+    box: bento/rockylinux-9
+    memory: 4096
+    cpus: 4

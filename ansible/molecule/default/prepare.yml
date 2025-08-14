@@ -1,0 +1,21 @@
+---
+name: Prepare
+hosts: all
+tasks:
+  - name: Provision host
+    dnf:
+      name:
+        - epel-release
+        - ansible
+        - python3-jmespath
+    
+  - name: Install dependencies
+    ansible_galaxy_install:
+      type: collection
+      requirements_file: ../../requirements.yml
+
+  - name: Run initial playbook
+    vars: 
+      initial_setup: true
+      ansible_connection: local
+    import_playbook: ../../playbook.yml
